@@ -50,6 +50,7 @@ const ShoppingContext = ({ children }) => {
   };
   useEffect(() => {
     fetchProductList();
+    setCartItems(JSON.parse(localStorage.getItem("cartItems")) || []);
   }, []);
   console.log(cartItems);
 
