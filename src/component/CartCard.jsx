@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ShoppingCartContext } from "./ShoppingContext";
 
 const CartCard = ({ cartItem }) => {
+  const { handleRemoveFromCart, handleAddToCart } =
+    useContext(ShoppingCartContext);
   return (
     <div>
       <div className="grid grid-cols-3 items-start gap-5">
@@ -15,7 +18,10 @@ const CartCard = ({ cartItem }) => {
             <h3 className="text-base font-bold text-gray-900">
               {cartItem?.title}
             </h3>
-            <button className="text-sm px-4 py-3 bg-black text-white font-extrabold mx-5 cursor-pointer mt-5">
+            <button
+              onClick={() => handleRemoveFromCart(cartItem, true)}
+              className="text-sm px-4 py-3 bg-black text-white font-extrabold mx-5 cursor-pointer mt-5"
+            >
               REMOVE
             </button>
           </div>
@@ -24,11 +30,21 @@ const CartCard = ({ cartItem }) => {
           <h3 className="text-lg font-bold text-gray-900">
             ${cartItem?.totalPrice.toFixed(2)}
           </h3>
+          <p className="mt-2 mb-3 font-bold text-[16px]">
+            Quantity: {cartItem?.quantity}
+          </p>
           <div className="mt-3 gap-2">
-            <button className="border border-[#000] px-4 py-4 rounded-md">
+            <button
+              onClick={() => handleAddToCart(cartItem)}
+              className="border border-[#000] px-4 py-4 rounded-md cursor-pointer"
+            >
               +
             </button>
-            <button className="border border-[#000] px-4 py-4 rounded-md">
+            <button
+              onClick={() => handleRemoveFromCart(cartItem, false)}
+              className="disabled:opacity-20 border border-[#000] px-4 py-4 rounded-md cursor-pointer"
+              disabled={cartItem?.quantity === 1}
+            >
               -
             </button>
           </div>

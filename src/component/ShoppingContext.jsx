@@ -42,12 +42,39 @@ const ShoppingContext = ({ children }) => {
         totalPrice: productDetails?.price,
       });
     } else {
+      existingCartItems[findIndexCart] = {
+        ...existingCartItems[findIndexCart],
+        quantity: existingCartItems[findIndexCart].quantity + 1,
+        totalPrice:
+          (existingCartItems[findIndexCart].quantity + 1) *
+          existingCartItems[findIndexCart].price,
+      };
     }
     console.log(existingCartItems, "exist");
     setCartItems(existingCartItems);
     localStorage.setItem("cartItems", JSON.stringify(existingCartItems));
     navigate("/cart");
   };
+  const handleRemoveFromCart = (productDetails, isRemoved) => {
+    let existingCartItems = [...cartItems];
+    const findIndexOfItem = existingCartItems.findIndex(
+      (item) => item.id === productDetails.id
+    );
+    if (isRemoved) {
+      existingCartItems.splice(findIndexOfItem, 1);
+    } else {
+      existingCartItems[findIndexOfItem] = {
+        ...existingCartItems[findIndexOfItem],
+        quantity: existingCartItems[findIndexOfItem].quantity - 1,
+        totalPrice:
+          (existingCartItems[findIndexOfItem].quantity - 1) *
+          existingCartItems[findIndexOfItem].price,
+      };
+    }
+    localStorage.setItem("cartItems", JSON.stringify(existingCartItems));
+    setCartItems(existingCartItems);
+  };
+
   useEffect(() => {
     fetchProductList();
     setCartItems(JSON.parse(localStorage.getItem("cartItems")) || []);
@@ -64,6 +91,7 @@ const ShoppingContext = ({ children }) => {
           setProductDetails,
           handleAddToCart,
           cartItems,
+          handleRemoveFromCart,
         }}
       >
         {children}
