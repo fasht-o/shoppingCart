@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShoppingCartContext } from "../component/ShoppingContext";
+import CartList from "./cartList";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const ProductDetails = () => {
     loading,
     setLoading,
     handleAddToCart,
+    cartItems,
   } = useContext(ShoppingCartContext);
   const { id } = useParams();
   const fetchDetails = async () => {
