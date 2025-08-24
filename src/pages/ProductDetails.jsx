@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShoppingCartContext } from "../component/ShoppingContext";
-import CartList from "./cartList";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
