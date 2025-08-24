@@ -12,7 +12,6 @@ const App = () => {
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="cart" element={<CartList />} />
       </Routes>
-      <ProductList />
     </div>
   );
 };
